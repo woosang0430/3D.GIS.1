@@ -121,6 +121,7 @@ var lClickEvent; //이벤트 등록 여부
 var lClickEventFlag = false; //이벤트 작동 여부
 var eventHandler; //이벤트 핸들러
 /** 클릭지점 좌표 */
+// 클릭지점 좌표 받아오는 코드
 function setMouseLClickEvent(cFlag) {
   if (eventHandler == undefined) {
     eventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); //핸들러 생성
@@ -138,6 +139,16 @@ function setMouseLClickEvent(cFlag) {
         ); //위치값 화면 좌표
         if (cartesian) {
           //##실습9. 이벤트에서 화면 좌표를 실세계 좌표로 변환하는 소스 추가
+          var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+          var longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(
+            4
+          ); //좌표로 변환
+          var latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(
+            4
+          ); //좌표로 변환
+
+          $("#evntLon").val(longitude); //인풋에 입력
+          $("#evntLat").val(latitude);
         }
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
@@ -145,6 +156,7 @@ function setMouseLClickEvent(cFlag) {
     lClickEventFlag = cFlag;
   }
 }
+// 클릭지점 좌표 받아오는 코드 끝
 
 /*위치 검색 함수*/
 function searchPlace(pageNum) {
