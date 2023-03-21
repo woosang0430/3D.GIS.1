@@ -523,10 +523,25 @@ function addWmsLayer(cFlag, layerName) {
   } else {
     if (cFlag) {
       //##실습12. wms 정보 추가하는 소스 추가
-      //브이월드 wms api페이지 접속하여 여러가지 wms레이어 추가해보기 5개 이상
-      //https://www.vworld.kr/dev/v4dv_wmsguide2_s001.do
-      //키는 그대로 사용하거나 회원가입하여 발급 필요// 42F6D36E-1A78-34B7-959F-37611794397B
       //호출 주소는 서버내 프록시로 구성되어 있어서 /proxywms로 요청
+      var wmsInfo = new Cesium.WebMapServiceImageryProvider({
+        //http://api.vworld.kr/req/wms
+        url: "/proxywms", //프록시 주소
+        parameters: {
+          // key: "F1D04FBB-DBB3-3F07-9B45-2FA496499F9B", //api key
+          key: "767B7ADF-10BA-3D86-AB7E-02816B5B92E9", //api key
+          version: "1.3.0", //wms version
+          domain: "localhost:8000", //api 신청 주소
+          format: "image/png",
+          transparent: "true",
+          crs: "EPSG:4326",
+        },
+        layers: layerName, //레이어 이름
+      });
+
+      var imageryLayers = viewer.imageryLayers; //이미지 레이어
+
+      wmsLayerMap.set(layerName, imageryLayers.addImageryProvider(wmsInfo)); //wms레이어 추가
     }
   }
 }
