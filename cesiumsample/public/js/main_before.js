@@ -785,6 +785,7 @@ function removeWeatherEntity() {
   //##실습19. 기상효과 제거
 }
 
+// point, line, polygon 그리기 기능 구현
 //사용자 객체 그리기 기능 추가 2022.07.13
 var floatingPoint = undefined; //커서 포인트
 var activeShape = undefined; //기본객체
@@ -855,7 +856,7 @@ function drawShape(positionData) {
     shape = viewer.entities.add({
       polyline: {
         positions: positionData,
-        clampToGround: true,
+        clampToGround: true, // 지형을 뚫지 않고, 지형 위에 그린다.
         width: 3,
       },
     });
@@ -922,3 +923,4 @@ function removeDrawEntity() {
 }
 
 //end
+// point, line, polygon 그리기 기능 구현 끝!
