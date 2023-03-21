@@ -365,6 +365,17 @@ function createModel(mName, height) {
   );
 
   //##실습7. 고정 위치에 모델 추가하는 소스 추가
+  const entity = viewer.entities.add({
+    id: mName,
+    name: url,
+    position,
+    orientation,
+    model: {
+      uri: url,
+      minimumPixelSize: 128,
+      maximumScale: 10,
+    },
+  });
 
   //모델 위치로 이동
   viewer.camera.flyTo({
@@ -379,6 +390,7 @@ function createModel(mName, height) {
 function removeAllEntity() {
   //##실습8. 전체 엔티티 삭제
 
+  viewer.entities.removeAll();
   $(".modelObject input[type=checkbox]").attr("checked", false);
 }
 
