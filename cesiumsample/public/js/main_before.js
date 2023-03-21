@@ -587,11 +587,30 @@ function addShadowEffect(cFlag) {
 //그림자 시뮬레이션 시작
 function startShadowSimulation() {
   //##실습15. 그림자 시뮬레이션 소스 추가
+  //시작시간
+  const start = Cesium.JulianDate.fromIso8601("2022-05-30");
+  //종료시간
+  const stop = Cesium.JulianDate.fromIso8601("2022-05-31");
+
+  //시계 객체
+  const clock = viewer.clock;
+
+  clock.startTime = start; //시작시간 설정
+  clock.stopTime = stop; //종료 시간 설정
+  clock.currentTime = start; //현재시간 설정
+  clock.clockRange = Cesium.ClockRange.LOOP_STOP; //루프 종료
+  clock.multiplier = 360; //시간 흐름 텀
+
+  clock.shouldAnimate = true; //시뮬레이션 시작
+  //##실습15. 그림자 시뮬레이션 소스 추가
 }
 
 //그림자 시뮬레이션 시작
 function stopShadowSimulation() {
   //##실습16. 그림자 시뮬레이션 종료 소스 추가
+  const clock = viewer.clock;
+
+  clock.shouldAnimate = false; // 시뮬레이션 종료
 }
 
 //=============== 통계 및 날씨 추가는 소스가 복잡하여 실습하기 힘듬 ==============================
