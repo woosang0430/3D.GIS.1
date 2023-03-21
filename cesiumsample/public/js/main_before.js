@@ -852,6 +852,25 @@ var RAIN_ENTITY; //비효과 엔티티
 function playSnowEffect() {
   scene.primitives.removeAll(); //기존 추가된 객체 삭제
   //##실습17. 눈 효과 추가
+  SNOW_ENTITY = scene.primitives.add(
+    new Cesium.ParticleSystem({
+      modelMatrix: new Cesium.Matrix4.fromTranslation(scene.camera.position),
+      minimumSpeed: -1.0,
+      maximumSpeed: 0.0,
+      lifetime: 15.0,
+      emitter: new Cesium.SphereEmitter(snowRadius),
+      startScale: 0.5,
+      endScale: 1.0,
+      image: "/img/snow.png",
+      emissionRate: 7000.0,
+      startColor: Cesium.Color.WHITE.withAlpha(0.0),
+      endColor: Cesium.Color.WHITE.withAlpha(1.0),
+      minimumImageSize: minimumSnowImageSize,
+      maximumImageSize: maximumSnowImageSize,
+      updateCallback: snowUpdate,
+    })
+  );
+  //##실습17. 눈 효과 추가
 
   //눈 오는것 같은 하늘 색상 등 변경
   scene.skyAtmosphere.hueShift = -0.8;
@@ -865,6 +884,25 @@ function playRainEffect() {
   scene.primitives.removeAll(); //기존 객체 삭제(눈효과 등)
   //##실습18. 비 효과 추가
 
+  RAIN_ENTITY = scene.primitives.add(
+    new Cesium.ParticleSystem({
+      modelMatrix: new Cesium.Matrix4.fromTranslation(scene.camera.position),
+      speed: -1.0,
+      lifetime: 15.0,
+      emitter: new Cesium.SphereEmitter(rainRadius),
+      startScale: 1.0,
+      endScale: 0.0,
+      image: "/img/rain.png",
+      emissionRate: 9000.0,
+      startColor: new Cesium.Color(0.27, 0.5, 0.7, 0.0),
+      endColor: new Cesium.Color(0.27, 0.5, 0.7, 0.98),
+      imageSize: rainImageSize,
+      updateCallback: rainUpdate,
+    })
+  );
+
+  //##실습18. 비 효과 추가
+
   //비 오는것 같은 하늘 색상 등 변경
   scene.skyAtmosphere.hueShift = -0.97;
   scene.skyAtmosphere.saturationShift = 0.25;
@@ -875,14 +913,26 @@ function playRainEffect() {
 
 function setSkyBright(sVal) {
   //##실습19. 하늘 밝기
+  scene.skyAtmosphere.brightnessShift = sVal; // 하늘 밝기
 }
 
 function setFogDensity(sVal) {
   //##실습20. 안개강도(가시범위)
+  scenc.fog.density = sVal; // 안개 강도
 }
 
 //기상 효과 제거
 function removeWeatherEntity() {
+  //##실습19. 기상효과 제거
+  if (SNOW_ENTITY != undefined) SNOW_ENTITY.show = false; //눈 엔티티 숨기기
+  if (RAIN_ENTITY != undefined) RAIN_ENTITY.show = false; //비 엔티티 숨기기
+
+  //하늘 색상 등 기본값 변경
+  scene.skyAtmosphere.hueShift = 0;
+  scene.skyAtmosphere.saturationShift = 0;
+  scene.skyAtmosphere.brightnessShift = 0;
+  scene.fog.density = 0;
+  scene.fog.minimumBrightness = 0;
   //##실습19. 기상효과 제거
 }
 
