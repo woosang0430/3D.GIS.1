@@ -264,6 +264,7 @@ function setSearchPOINT(x, y, i) {
 }
 /**검색 위치 마크 끝 */
 
+// osm 건물 호출 로직 시작
 //건물 객체 변수
 var osmPrimitive;
 //OSM 건물 호출
@@ -273,16 +274,20 @@ function addOSMBuilding(cFlag) {
   } else {
     if (cFlag) {
       //##실습3.osm 건물 추가 소스 추가
+      osmPrimitive = viewer.scene.primitives.add(Cesium.createOsmBuildings()); // <<<<<<< 여기입니다.
     }
   }
 }
+// osm 건물 호출 로직 끝
 
 //OSM 건물 아이디로 숨기기
 function removeOSMBuilding(cFlag) {
   osmPrimitive.style = new Cesium.Cesium3DTileStyle({
     show: {
       conditions: [
+        ["${elementId} === 468748444", !cFlag],
         ["${elementId} === 468748445", !cFlag],
+        ["${elementId} === 468748446", !cFlag],
         //##실습4.osm 건물 아이디 추가 하여 삭제
 
         [true, true],
