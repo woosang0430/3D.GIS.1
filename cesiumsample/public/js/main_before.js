@@ -1,3 +1,6 @@
+const vWorldKey = "767B7ADF-10BA-3D86-AB7E-02816B5B92E9";
+const vWorldDomain = "localhost:8000";
+
 //지도 리사이즈 이벤트 지정
 window.onresize = windowResize;
 
@@ -529,9 +532,9 @@ function addWmsLayer(cFlag, layerName) {
         url: "/proxywms", //프록시 주소
         parameters: {
           // key: "F1D04FBB-DBB3-3F07-9B45-2FA496499F9B", //api key
-          key: "767B7ADF-10BA-3D86-AB7E-02816B5B92E9", //api key
+          key: vWorldKey, //api key
           version: "1.3.0", //wms version
-          domain: "localhost:8000", //api 신청 주소
+          domain: vWorldDomain, //api 신청 주소
           format: "image/png",
           transparent: "true",
           crs: "EPSG:4326",
@@ -557,10 +560,22 @@ function addWfsLayer(cFlag, layerName) {
     //최초 호출시
     if (cFlag) {
       //##실습13. wfs정보 추가하는 소스 추가
-      //브이월드 wfs api페이지 접속하여 여러가지 wfs레이어 추가해보기 5개 이상
-      //https://www.vworld.kr/dev/v4dv_wmsguide2_s001.do
-      //키는 그대로 사용하거나 회원가입하여 발급 필요
-      //호출 주소는 서버내 프록시로 구성되어 있어서 /proxywfs로 요청
+      wfsIndexLayer = Cesium.GeoJsonDataSource.load(
+        //wfs를 geojosn타입으로 추가
+        `/proxywfs?service=WFS&request=GetFeature&VERSION=1.1.0&maxFeatures=50&output=application/json&KEY=${vWorldKey}&DOMAIN=${vWorldDomain}&crs=EPSG:4326&srsname=EPSG:4326&typeName=${layerName}`,
+        {
+          //스타일 지정
+          stroke: Cesium.Color.WHITE,
+          strokeWidth: 5,
+        }
+      );
+
+      //추가된 레이어 wfs레이어 맵에 추가
+      layerName,
+        viewer.dataSources.add(wfsIndexLayer).then(function (val) {
+          wfsLayerMap.set(layerName, val);
+        });
+      //##실습13. wfs정보 추가하는 소스 추가
     }
   }
 }
