@@ -158,6 +158,7 @@ function setMouseLClickEvent(cFlag) {
 }
 // 클릭지점 좌표 받아오는 코드 끝
 
+// 검색 기능 구현 with vWorld
 /*위치 검색 함수*/
 function searchPlace(pageNum) {
   viewer.entities.removeAll();
@@ -247,6 +248,7 @@ function searchPlace(pageNum) {
     },
   });
 }
+// 검색 기능 구현 with vWorld 끝
 
 /**검색 위치 마크 */
 function setSearchPOINT(x, y, i) {
@@ -260,6 +262,7 @@ function setSearchPOINT(x, y, i) {
     },
   });
 }
+/**검색 위치 마크 끝 */
 
 //건물 객체 변수
 var osmPrimitive;
