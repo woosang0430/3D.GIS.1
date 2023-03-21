@@ -396,13 +396,48 @@ function removeAllEntity() {
 
 let moveCnt = 0; //애니메이션 카운트
 let animationInterval; //애니메이션 인터벌
-let moveTerm = 0.0002; //이동 텀
+let moveTerm = 0.00000051; //이동 텀
 //애니메이션 시작
 function playCarAnimation() {
   var initlon = 127.098;
   var initlat = 37.5125827313;
   var initalt = 100;
   //##실습14. 벌룬 애니메이션 소스 추가
+  animationInterval = setInterval(function () {
+    var thisEntity = viewer.entities.getById("CesiumBalloon");
+    var direction = parseInt(moveCnt / 100);
+
+    if (direction == 0) {
+      //25프레임 까지 동쪽으로 이동
+      initlon = initlon + moveTerm;
+    } else if (direction == 1) {
+      //26~45 프레임 까지 남쪽 이동
+      initlat = initlat - moveTerm;
+    } else if (direction == 2) {
+      //46~75 프레임 까지 서쪽 이동
+      initlon = initlon - moveTerm;
+    } else if (direction == 3) {
+      //76~100 프레임 까지 북쪽 이동
+      initlat = initlat + moveTerm;
+    }
+
+    thisEntity.position = Cesium.Cartesian3.fromDegrees(
+      initlon,
+      initlat,
+      initalt
+    );
+
+    //viewer.trackedEntity = thisEntity; //시점이 객체를 따라가는 로직
+
+    moveCnt++;
+    if (moveCnt == 400) {
+      //100프레임 후 종료
+
+      stopCarAnimation();
+    }
+  }, 100); //프레임 이동시간 ms
+
+  //##실습14. 벌룬 애니메이션 소스 추가 끝
 }
 
 //애니메이션 종료
