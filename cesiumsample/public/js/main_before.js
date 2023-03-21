@@ -308,7 +308,7 @@ function addAssetBuilding(cFlag) {
       assetBuilding = viewer.scene.primitives.add(
         new Cesium.Cesium3DTileset({
           //##실습5. 본인이 추가한 건물 에셋 아이디 추가
-          url: Cesium.IonResource.fromAssetId("본인 에셋 아이디 추가"),
+          url: Cesium.IonResource.fromAssetId("1590602"),
         })
       );
     }
@@ -325,7 +325,7 @@ function addAssetTruck(cFlag) {
       assetTruck = viewer.scene.primitives.add(
         new Cesium.Cesium3DTileset({
           //##실습6. 본인이 추가한 트럭에셋 아이디 추가
-          url: Cesium.IonResource.fromAssetId("본인 에셋 아이디 추가"),
+          url: Cesium.IonResource.fromAssetId("1590631"),
         })
       );
       positionProperty = assetTruck.position;
