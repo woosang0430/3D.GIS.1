@@ -53,7 +53,8 @@ function initUIEvent() {
 }
 
 // ##실습1. 회원가입하고 받은 토큰 입력
-Cesium.Ion.defaultAccessToken = "input your cesium' token";
+Cesium.Ion.defaultAccessToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0OTg1MzRmOS1kMzEyLTQyZTAtODdkMC01ZTRhNGU3MjQ2MjkiLCJpZCI6MTI5NDY0LCJpYXQiOjE2NzkzMDA4Njl9.2KIdvtRwurpav1srRVW3OrhvG-CJxpH10JX6JUtnoJo";
 
 //지도 기본 뷰어 객체
 var viewer;
@@ -104,7 +105,16 @@ function moveCamera() {
   var lon = $("#camLon").val(); //경도
   var lat = $("#camLat").val(); //위도
   var alt = $("#camAlt").val(); //높이
+
   //##실습2. 기본 지도 로딩 함수 추가. 지정 좌표로 위치 이동 소스 추가
+  // 카메라 위치 이동
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(lon, lat, alt),
+    orientation: {
+      heading: Cesium.Math.toRadians(0.0),
+      pitch: Cesium.Math.toRadians(-30.0),
+    },
+  });
 }
 
 var lClickEvent; //이벤트 등록 여부
